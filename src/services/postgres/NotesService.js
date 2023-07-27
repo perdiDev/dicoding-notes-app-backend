@@ -54,14 +54,14 @@ class NotesService {
     const updatedAt = new Date().toISOString();
 
     const query = {
-      text: 'UPDATE title=$1 body=$2 tags=$3 updated_at=$4 FROM notes WHERE id=$5',
+      text: 'UPDATE notes SET title=$1, body=$2, tags=$3, updated_at=$4 WHERE id=$5 RETURNING id',
       values: [title, body, tags, updatedAt, id],
     };
 
     const result = await this._pool.query(query);
 
     if (!result.rows.length) {
-      throw new Error('Gagal memperbarui catatan. Id tidak ditemukan');
+      throw new NotFoundError('Gagal memperbarui catatan. Id tidak ditemukan');
     }
   }
 
@@ -73,7 +73,7 @@ class NotesService {
 
     const result = await this._pool.query(query);
     if (!result.rows.length) {
-      throw new Error('Catatan gagal dihapus. Id tidak ditemukan');
+      throw new NotFoundError('Catatan gagal dihapus. Id tidak ditemukan');
     }
   }
 }
