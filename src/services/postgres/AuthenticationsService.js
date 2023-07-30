@@ -1,5 +1,4 @@
 const { Pool } = require('pg');
-const NotFoundError = require('../../exceptions/NotFoundError');
 const InvariantError = require('../../exceptions/InvariantError');
 
 class AuthenticationsService {
